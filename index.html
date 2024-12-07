@@ -5,29 +5,101 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>跨域代理示例</title>
   <style>
+    /* 通用样式 */
     body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
     }
+    
+    h1 {
+      color: #4CAF50;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    
+    p {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    /* 输入框和按钮样式 */
     input, button {
-      padding: 10px;
-      font-size: 14px;
+      width: 100%;
+      max-width: 400px;
+      padding: 12px;
+      margin: 10px 0;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
     }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    /* 响应区域 */
     #response {
+      width: 100%;
+      max-width: 500px;
+      background-color: #fff;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      padding: 20px;
+      box-sizing: border-box;
       margin-top: 20px;
-      padding: 10px;
-      background-color: #f0f0f0;
-      border: 1px solid #ccc;
-      max-height: 400px;
+      max-height: 300px;
       overflow-y: auto;
+    }
+
+    pre {
+      white-space: pre-wrap;       /* 保证文本换行显示 */
+      word-wrap: break-word;       /* 保证超长文本不溢出 */
+      font-size: 14px;
+      line-height: 1.6;
+      background-color: #f4f4f4;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+
+    /* 响应式设计：在小屏幕上适应 */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 20px;
+      }
+
+      input, button {
+        font-size: 14px;
+      }
+
+      #response {
+        width: 95%;
+        padding: 15px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>请求</h1>
-  <p>请输入您的购买链接 URL:</p>
-  <input type="text" id="urlInput" placeholder="输入链接" style="width: 400px;" />
+  <h1>请求数据</h1>
+  <p>请输入您要获取的 URL：</p>
+  <input type="text" id="urlInput" placeholder="输入链接" />
   <button onclick="fetchData()">获取数据</button>
 
   <div id="response">
@@ -53,7 +125,7 @@
             const jsonData = JSON.parse(data);
             document.getElementById('responseText').textContent = JSON.stringify(jsonData, null, 2);
           } catch (error) {
-            document.getElementById('responseText').textContent =  data;
+            document.getElementById('responseText').textContent = data;
           }
         })
         .catch(error => {
