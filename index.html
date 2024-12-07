@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>跨域代理示例</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 14px;
+    }
+    #response {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>跨域代理请求</h1>
+  <p>请输入您要获取内容的 URL:</p>
+  <input type="text" id="urlInput" placeholder="输入链接" style="width: 400px;" />
+  <button onclick="fetchData()">获取数据</button>
+
+  <div id="response">
+    <h2>响应数据：</h2>
+    <pre id="responseText">等待请求...</pre>
+  </div>
+
+  <script>
+    function fetchData() {
+      const url = document.getElementById('urlInput').value.trim();
+      if (url === '') {
+        alert('请输入一个有效的 URL！');
+        return;
+      }
+
+      const proxyUrl = 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(url);
+
+      fetch(proxyUrl)
+        .then(response => response.text())  // 使用 text() 而不是 json()
+        .then(data => {
+          // 尝试解析返回的内容，如果不是 JSON 则直接显示
+          try {
+            const jsonData = JSON.parse(data);
+            document.getElementById('responseText').textContent = JSON.stringify(jsonData, null, 2);
+          } catch (error) {
+            document.getElementById('responseText').textContent =  data;
+          }
+        })
+        .catch(error => {
+          // 处理错误
+          document.getElementById('responseText').textContent = '发生错误: ' + error.message;
+        });
+    }
+  </script>
+
+</body>
+</html>
