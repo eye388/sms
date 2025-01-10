@@ -115,7 +115,7 @@
         return;
       }
 
-      const proxyUrl = 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(url);
+      const proxyUrl = 'https://cors.eu.org/' + encodeURIComponent(url);
 
       fetch(proxyUrl)
         .then(response => response.text())  // 使用 text() 而不是 json()
